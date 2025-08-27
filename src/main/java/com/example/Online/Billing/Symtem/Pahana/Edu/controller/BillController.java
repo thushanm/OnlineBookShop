@@ -18,6 +18,13 @@ public class BillController {
     @Autowired
     private CustomerService customerService;
 
+    // CHANGE THIS LINE
+    @GetMapping("") // Explicitly map to the root of /bills
+    public String viewBills(Model model) {
+        model.addAttribute("bills", billService.getAllBills());
+        return "view-bills";
+    }
+
     @GetMapping("/create")
     public String showCreateBillForm(Model model) {
         model.addAttribute("bill", new BillDTO());
@@ -28,6 +35,7 @@ public class BillController {
     @PostMapping("/create")
     public String createBill(@ModelAttribute("bill") BillDTO billDTO) {
         billService.createAndSaveBill(billDTO);
-        return "redirect:/home";
+
+        return "redirect:/bills";
     }
 }

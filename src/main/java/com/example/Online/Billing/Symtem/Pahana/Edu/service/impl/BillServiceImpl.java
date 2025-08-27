@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class BillServiceImpl implements BillService {
@@ -22,7 +24,8 @@ public class BillServiceImpl implements BillService {
 
     @Override
     public void createAndSaveBill(BillDTO billDTO) {
-        Customer customer = customerRepository.findById(billDTO.getCustomerId()).orElseThrow(() -> new RuntimeException("Customer not found"));
+        Customer customer = customerRepository.findById(billDTO.getCustomerId())
+                .orElseThrow(() -> new RuntimeException("Customer not found with id: " + billDTO.getCustomerId()));
 
         double totalAmount = calculateTotalAmount(billDTO.getUnitsConsumed());
 
@@ -35,8 +38,22 @@ public class BillServiceImpl implements BillService {
         billRepository.save(bill);
     }
 
+    @Override
+    public List<BillDTO> getAllBills() {
+        return billRepository.findAll().stream().map(bill -> {
+            BillDTO dto = new BillDTO();
+            dto.setId(bill.getId());
+            dto.setCustomerId(bill.getCustomer().getId());
+            dto.setCustomerName(bill.getCustomer().getName());
+            dto.setCustomerAccountNumber(bill.getCustomer().getAccountNumber());
+            dto.setUnitsConsumed(bill.getUnitsConsumed());
+            dto.setTotalAmount(bill.getTotalAmount());
+            dto.setBillDate(bill.getBillDate());
+            return dto;
+        }).collect(Collectors.toList());
+    }
+
     private double calculateTotalAmount(int unitsConsumed) {
-        // Simple billing logic: Rs. 10 per unit
         return unitsConsumed * 10.0;
     }
 }

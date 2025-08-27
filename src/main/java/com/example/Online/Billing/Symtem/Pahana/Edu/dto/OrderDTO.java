@@ -1,16 +1,17 @@
 package com.example.Online.Billing.Symtem.Pahana.Edu.dto;
 
 import lombok.Data;
+
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
-public class BillDTO {
+public class OrderDTO {
     private Long id;
     private Long customerId;
-    // Add these two fields
     private String customerName;
-    private String customerAccountNumber;
-    private int unitsConsumed;
+    private LocalDate orderDate;
     private double totalAmount;
-    private LocalDate billDate;
+    private List<Long> itemIds;
+    private List<Integer> quantities;
 }
