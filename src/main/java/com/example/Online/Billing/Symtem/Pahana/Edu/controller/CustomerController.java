@@ -1,6 +1,6 @@
 package com.example.Online.Billing.Symtem.Pahana.Edu.controller;
 
-import com.example.Online.Billing.Symtem.Pahana.Edu.entity.Customer;
+import com.example.Online.Billing.Symtem.Pahana.Edu.dto.CustomerDTO;
 import com.example.Online.Billing.Symtem.Pahana.Edu.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,13 +22,13 @@ public class CustomerController {
 
     @GetMapping("/add")
     public String showAddCustomerForm(Model model) {
-        model.addAttribute("customer", new Customer());
+        model.addAttribute("customer", new CustomerDTO());
         return "add-customer";
     }
 
     @PostMapping("/add")
-    public String addCustomer(@ModelAttribute("customer") Customer customer) {
-        customerService.saveCustomer(customer);
+    public String addCustomer(@ModelAttribute("customer") CustomerDTO customerDTO) {
+        customerService.saveCustomer(customerDTO);
         return "redirect:/customers";
     }
 
@@ -39,9 +39,9 @@ public class CustomerController {
     }
 
     @PostMapping("/edit/{id}")
-    public String updateCustomer(@PathVariable("id") Long id, @ModelAttribute("customer") Customer customer) {
-        customer.setId(id);
-        customerService.saveCustomer(customer);
+    public String updateCustomer(@PathVariable("id") Long id, @ModelAttribute("customer") CustomerDTO customerDTO) {
+        customerDTO.setId(id);
+        customerService.saveCustomer(customerDTO);
         return "redirect:/customers";
     }
 
