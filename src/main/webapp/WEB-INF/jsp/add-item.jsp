@@ -12,6 +12,7 @@
         label { display: block; margin-bottom: 8px; }
         input[type="text"] { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; }
         input[type="submit"] { width: 100%; padding: 12px; background-color: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        .home-link { display: inline-block; margin-top: 20px; padding: 10px 20px; background-color: #6c757d; color: white; text-decoration: none; border-radius: 5px; }
     </style>
 </head>
 <body>
@@ -30,6 +31,7 @@
             <input type="submit" value="Save"/>
         </div>
     </form>
+    <a href="/home" class="home-link">Back to Home</a>
 </div>
 </body>
 </html>

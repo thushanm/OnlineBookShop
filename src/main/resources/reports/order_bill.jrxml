@@ -2,7 +2,13 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
-              name="OrderBill" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+              name="OrderBill" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a1b2c3d4-e5f6-a7b8-c9d0-e1f2a3b4c5d6">
+
+    <subDataset name="itemDataset" uuid="1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d">
+        <field name="item.name" class="java.lang.String"/>
+        <field name="quantity" class="java.lang.Integer"/>
+        <field name="price" class="java.lang.Double"/>
+    </subDataset>
 
     <parameter name="shopName" class="java.lang.String"/>
     <parameter name="shopAddress" class="java.lang.String"/>
@@ -11,33 +17,27 @@
     <parameter name="orderId" class="java.lang.Long"/>
     <parameter name="orderDate" class="java.lang.String"/>
     <parameter name="totalAmount" class="java.lang.Double"/>
-    <parameter name="orderDetails" class="java.util.Collection"/>
-
-    <field name="item.name" class="java.lang.String"/>
-    <field name="quantity" class="java.lang.Integer"/>
-    <field name="price" class="java.lang.Double"/>
+    <parameter name="orderDetailsDataSource" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
 
     <title>
         <band height="100">
             <textField>
                 <reportElement x="0" y="0" width="555" height="30" uuid="a1b2c3d4-e5f6-a7b8-c9d0-e1f2a3b4c5d6"/>
-                <textElement>
+                <textElement textAlignment="Center">
                     <font size="22" isBold="true"/>
                 </textElement>
                 <textFieldExpression><![CDATA[$P{shopName}]]></textFieldExpression>
             </textField>
             <textField>
                 <reportElement x="0" y="30" width="555" height="20" uuid="b1c2d3e4-f5a6-b7c8-d9e0-f1a2b3c4d5e6"/>
+                <textElement textAlignment="Center"/>
                 <textFieldExpression><![CDATA[$P{shopAddress}]]></textFieldExpression>
             </textField>
             <textField>
                 <reportElement x="0" y="50" width="555" height="20" uuid="c1d2e3f4-a5b6-c7d8-e9f0-a1b2c3d4e5f6"/>
+                <textElement textAlignment="Center"/>
                 <textFieldExpression><![CDATA[$P{shopPhone}]]></textFieldExpression>
             </textField>
-            <staticText>
-                <reportElement x="0" y="80" width="555" height="20" uuid="d1e2f3a4-b5c6-d7e8-f9a0-b1c2d3e4f5a6"/>
-                <text><![CDATA[----------------------------------------------------------------------------------------------------------------------------------]]></text>
-            </staticText>
         </band>
     </title>
 
@@ -104,23 +104,33 @@
     </columnHeader>
 
     <detail>
-        <band height="20">
-            <textField>
-                <reportElement x="0" y="0" width="255" height="20" uuid="c3d4e5f6-a7b8-c9d0-e1f2-a3b4c5d6e7f8"/>
-                <textFieldExpression><![CDATA[$F{item.name}]]></textFieldExpression>
-            </textField>
-            <textField>
-                <reportElement x="255" y="0" width="100" height="20" uuid="d3e4f5a6-b7c8-d9e0-f1a2-b3c4d5e6f7a8"/>
-                <textFieldExpression><![CDATA[$F{quantity}]]></textFieldExpression>
-            </textField>
-            <textField>
-                <reportElement x="355" y="0" width="100" height="20" uuid="e3f4a5b6-c7d8-e9f0-a1b2-c3d4e5f6a7b8"/>
-                <textFieldExpression><![CDATA[$F{price}]]></textFieldExpression>
-            </textField>
-            <textField>
-                <reportElement x="455" y="0" width="100" height="20" uuid="f3a4b5c6-d7e8-f9a0-b1c2-d3e4f5a6b7c8"/>
-                <textFieldExpression><![CDATA[new Double($F{quantity} * $F{price})]]></textFieldExpression>
-            </textField>
+        <band height="50">
+            <componentElement>
+                <reportElement x="0" y="0" width="555" height="50" uuid="11111111-2222-3333-4444-555555555555"/>
+                <jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+                    <datasetRun subDataset="itemDataset" uuid="22222222-3333-4444-5555-666666666666">
+                        <dataSourceExpression><![CDATA[$P{orderDetailsDataSource}]]></dataSourceExpression>
+                    </datasetRun>
+                    <jr:listContents height="20" width="555">
+                        <textField>
+                            <reportElement x="0" y="0" width="255" height="20" uuid="c3d4e5f6-a7b8-c9d0-e1f2-a3b4c5d6e7f8"/>
+                            <textFieldExpression><![CDATA[$F{item.name}]]></textFieldExpression>
+                        </textField>
+                        <textField>
+                            <reportElement x="255" y="0" width="100" height="20" uuid="d3e4f5a6-b7c8-d9e0-f1a2-b3c4d5e6f7a8"/>
+                            <textFieldExpression><![CDATA[$F{quantity}]]></textFieldExpression>
+                        </textField>
+                        <textField>
+                            <reportElement x="355" y="0" width="100" height="20" uuid="e3f4a5b6-c7d8-e9f0-a1b2-c3d4e5f6a7b8"/>
+                            <textFieldExpression><![CDATA[$F{price}]]></textFieldExpression>
+                        </textField>
+                        <textField>
+                            <reportElement x="455" y="0" width="100" height="20" uuid="f3a4b5c6-d7e8-f9a0-b1c2-d3e4f5a6b7c8"/>
+                            <textFieldExpression><![CDATA[new Double($F{quantity} * $F{price})]]></textFieldExpression>
+                        </textField>
+                    </jr:listContents>
+                </jr:list>
+            </componentElement>
         </band>
     </detail>
 
@@ -128,7 +138,7 @@
         <band height="50">
             <staticText>
                 <reportElement x="355" y="10" width="100" height="30" uuid="a4b5c6d7-e8f9-a0b1-c2d3-e4f5a6b7c8d9"/>
-                <textElement>
+                <textElement textAlignment="Right">
                     <font size="14" isBold="true"/>
                 </textElement>
                 <text><![CDATA[Total:]]></text>
@@ -142,5 +152,4 @@
             </textField>
         </band>
     </summary>
-
 </jasperReport>

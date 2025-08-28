@@ -11,7 +11,7 @@
         h1 { color: #333; text-align: center; }
         .order-table { width: 100%; border-collapse: collapse; }
         .order-table th, .order-table td { border: 1px solid #ddd; padding: 12px; text-align: left; }
-        .home-link { display: inline-block; margin-top: 20px; text-decoration: none; background-color: #007bff; color: white; padding: 10px 20px; border-radius: 5px; }
+        .home-link { display: inline-block; margin-top: 20px; padding: 10px 20px; background-color: #6c757d; color: white; text-decoration: none; border-radius: 5px; }
     </style>
 </head>
 <body>
@@ -35,7 +35,7 @@
                 <td>${order.orderDate}</td>
                 <td>${order.totalAmount}</td>
                 <td>
-                    <a href="/reports/order/${order.id}">Download Bill</a>
+                    <a href="/reports/order/${order.id}" target="_blank">View Bill</a>
                 </td>
             </tr>
         </c:forEach>

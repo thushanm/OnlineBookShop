@@ -11,8 +11,9 @@
         h1 { text-align: center; }
         .form-group { margin-bottom: 20px; }
         label { display: block; margin-bottom: 8px; }
-        input, select { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; }
+        input, select { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
         input[type="submit"] { background-color: #28a745; color: white; cursor: pointer; }
+        .home-link { display: inline-block; margin-top: 20px; padding: 10px 20px; background-color: #6c757d; color: white; text-decoration: none; border-radius: 5px; }
     </style>
 </head>
 <body>
@@ -35,6 +36,7 @@
             <input type="submit" value="Create Bill"/>
         </div>
     </form>
+    <a href="/home" class="home-link">Back to Home</a>
 </div>
 </body>
 </html>

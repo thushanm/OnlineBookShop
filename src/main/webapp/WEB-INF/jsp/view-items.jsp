@@ -13,6 +13,7 @@
         .item-table { width: 100%; border-collapse: collapse; }
         .item-table th, .item-table td { border: 1px solid #ddd; padding: 12px; text-align: left; }
         .action-links a { margin-right: 10px; }
+        .home-link { display: inline-block; margin-top: 20px; padding: 10px 20px; background-color: #6c757d; color: white; text-decoration: none; border-radius: 5px; }
     </style>
 </head>
 <body>
@@ -22,6 +23,7 @@
     <table class="item-table">
         <thead>
         <tr>
+            <th>Item ID</th>
             <th>Name</th>
             <th>Price</th>
             <th>Actions</th>
@@ -30,6 +32,7 @@
         <tbody>
         <c:forEach var="item" items="${items}">
             <tr>
+                <td>${item.id}</td>
                 <td>${item.name}</td>
                 <td>${item.price}</td>
                 <td class="action-links">
@@ -40,6 +43,7 @@
         </c:forEach>
         </tbody>
     </table>
+    <a href="/home" class="home-link">Back to Home</a>
 </div>
 </body>
 </html>

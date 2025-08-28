@@ -5,10 +5,10 @@
     <meta charset="ISO-8859-1">
     <title>Home</title>
     <style>
-        body { font-family: Arial, sans-serif; background-color: #f4f4f9; margin: 0; padding: 20px; text-align: center; }
-        .container { max-width: 800px; margin: 40px auto; background: #fff; padding: 40px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
-        h1 { color: #333; }
-        .nav-list { list-style: none; padding: 0; margin-top: 30px; }
+        body { font-family: Arial, sans-serif; background-color: #f4f4f9; margin: 0; padding: 20px; display: flex; justify-content: center; align-items: center; min-height: 100vh; box-sizing: border-box; }
+        .container { max-width: 800px; width: 100%; background: #fff; padding: 40px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); text-align: center; display: flex; flex-direction: column; gap: 40px; }
+        h1 { color: #333; margin: 0; }
+        .nav-list { list-style: none; padding: 0; margin: 0; width: 100%; }
         .nav-list li { margin: 15px 0; }
         .nav-list a { text-decoration: none; background-color: #007bff; color: white; padding: 15px 30px; border-radius: 5px; display: block; transition: background-color 0.3s; }
         .nav-list a:hover { background-color: #0056b3; }

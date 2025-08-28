@@ -11,7 +11,7 @@
         h1 { color: #333; text-align: center; }
         .bill-table { width: 100%; border-collapse: collapse; }
         .bill-table th, .bill-table td { border: 1px solid #ddd; padding: 12px; text-align: left; }
-        .home-link { display: inline-block; margin-top: 20px; text-decoration: none; background-color: #007bff; color: white; padding: 10px 20px; border-radius: 5px; }
+        .home-link { display: inline-block; margin-top: 20px; padding: 10px 20px; background-color: #6c757d; color: white; text-decoration: none; border-radius: 5px; }
     </style>
 </head>
 <body>
@@ -20,6 +20,7 @@
     <table class="bill-table">
         <thead>
         <tr>
+            <th>Bill ID</th>
             <th>Customer Name</th>
             <th>Account Number</th>
             <th>Units Consumed</th>
@@ -30,6 +31,7 @@
         <tbody>
         <c:forEach var="bill" items="${bills}">
             <tr>
+                <td>${bill.id}</td>
                 <td>${bill.customerName}</td>
                 <td>${bill.customerAccountNumber}</td>
                 <td>${bill.unitsConsumed}</td>

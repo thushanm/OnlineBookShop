@@ -22,7 +22,7 @@ public class ReportController {
         try {
             byte[] pdf = reportService.generateOrderBill(orderId);
             return ResponseEntity.ok()
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=order_" + orderId + ".pdf")
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=order_" + orderId + ".pdf")
                     .contentType(MediaType.APPLICATION_PDF)
                     .body(pdf);
         } catch (Exception e) {

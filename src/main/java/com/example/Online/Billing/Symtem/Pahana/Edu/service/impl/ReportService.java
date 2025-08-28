@@ -26,7 +26,7 @@ public class ReportService {
         File file = ResourceUtils.getFile("classpath:reports/order_bill.jrxml");
         JasperReport jasperReport = JasperCompileManager.compileReport(file.getAbsolutePath());
 
-        JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(order.getOrderDetails());
+        JRBeanCollectionDataSource orderDetailsDataSource = new JRBeanCollectionDataSource(order.getOrderDetails());
 
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("shopName", "Pahana Edu Bookshop");
@@ -36,7 +36,9 @@ public class ReportService {
         parameters.put("orderId", order.getId());
         parameters.put("orderDate", order.getOrderDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
         parameters.put("totalAmount", order.getTotalAmount());
-        parameters.put("orderDetails", dataSource);
+
+        parameters.put("orderDetailsDataSource", orderDetailsDataSource);
+
 
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, new JREmptyDataSource());
         return JasperExportManager.exportReportToPdf(jasperPrint);

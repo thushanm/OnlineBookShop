@@ -6,57 +6,14 @@
     <meta charset="ISO-8859-1">
     <title>Manage Customers</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
-            margin: 0;
-            padding: 20px;
-        }
-        .container {
-            max-width: 1000px;
-            margin: auto;
-            background: #fff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-        h1 {
-            color: #333;
-            text-align: center;
-            margin-bottom: 24px;
-        }
-        .add-button {
-            display: inline-block;
-            margin-bottom: 20px;
-            padding: 10px 20px;
-            background-color: #28a745;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-        }
-        .add-button:hover {
-            background-color: #218838;
-        }
-        .customer-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        .customer-table th, .customer-table td {
-            border: 1px solid #ddd;
-            padding: 12px;
-            text-align: left;
-        }
-        .customer-table th {
-            background-color: #f8f9fa;
-        }
-        .action-links a {
-            margin-right: 10px;
-            text-decoration: none;
-            color: #007bff;
-        }
-        .action-links a.delete {
-            color: #d9534f;
-        }
+        body { font-family: Arial, sans-serif; background-color: #f4f4f9; margin: 0; padding: 20px; }
+        .container { max-width: 1000px; margin: auto; background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        h1 { color: #333; text-align: center; }
+        .add-button { display: inline-block; margin-bottom: 20px; padding: 10px 20px; background-color: #28a745; color: white; text-decoration: none; border-radius: 5px; }
+        .customer-table { width: 100%; border-collapse: collapse; }
+        .customer-table th, .customer-table td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        .action-links a { margin-right: 10px; }
+        .home-link { display: inline-block; margin-top: 20px; padding: 10px 20px; background-color: #6c757d; color: white; text-decoration: none; border-radius: 5px; }
     </style>
 </head>
 <body>
@@ -66,6 +23,7 @@
     <table class="customer-table">
         <thead>
         <tr>
+            <th>Customer ID</th>
             <th>Account Number</th>
             <th>Name</th>
             <th>Address</th>
@@ -76,6 +34,7 @@
         <tbody>
         <c:forEach var="customer" items="${customers}">
             <tr>
+                <td>${customer.id}</td>
                 <td>${customer.accountNumber}</td>
                 <td>${customer.name}</td>
                 <td>${customer.address}</td>
@@ -88,6 +47,7 @@
         </c:forEach>
         </tbody>
     </table>
+    <a href="/home" class="home-link">Back to Home</a>
 </div>
 </body>
 </html>
