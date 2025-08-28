@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/orders")
@@ -40,8 +41,14 @@ public class OrderController {
     }
 
     @PostMapping("/place")
-    public String placeOrder(@ModelAttribute("order") OrderDTO orderDTO) {
-        orderService.placeOrder(orderDTO);
-        return "redirect:/orders";
+    public String placeOrder(@ModelAttribute("order") OrderDTO orderDTO, RedirectAttributes redirectAttributes) {
+        try {
+            orderService.placeOrder(orderDTO);
+            return "redirect:/orders";
+        } catch (RuntimeException e) {
+
+            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+            return "redirect:/orders/place";
+        }
     }
 }

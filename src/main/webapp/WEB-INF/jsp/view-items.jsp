@@ -26,6 +26,7 @@
             <th>Item ID</th>
             <th>Name</th>
             <th>Price</th>
+            <th>In Stock</th>
             <th>Actions</th>
         </tr>
         </thead>
@@ -35,6 +36,7 @@
                 <td>${item.id}</td>
                 <td>${item.name}</td>
                 <td>${item.price}</td>
+                <td>${item.inStock}</td>
                 <td class="action-links">
                     <a href="/items/edit/${item.id}">Edit</a>
                     <a href="/items/delete/${item.id}">Delete</a>

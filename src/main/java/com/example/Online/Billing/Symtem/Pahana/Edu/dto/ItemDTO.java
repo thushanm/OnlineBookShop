@@ -7,4 +7,5 @@ public class ItemDTO {
     private Long id;
     private String name;
     private double price;
+    private int inStock;
 }

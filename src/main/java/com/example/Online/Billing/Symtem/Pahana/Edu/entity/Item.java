@@ -1,6 +1,5 @@
 package com.example.Online.Billing.Symtem.Pahana.Edu.entity;
 
-// These are the only imports you need for a clean entity
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,4 +21,5 @@ public class Item {
     private Long id;
     private String name;
     private double price;
+    private int inStock;
 }

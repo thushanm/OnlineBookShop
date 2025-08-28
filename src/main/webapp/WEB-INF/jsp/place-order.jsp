@@ -20,11 +20,15 @@
         .add-item-btn { background-color: #007bff; color: white; }
         .submit-btn { background-color: #28a745; color: white; width: 100%; padding: 12px; }
         .home-link { display: inline-block; margin-top: 20px; padding: 10px 20px; background-color: #6c757d; color: white; text-decoration: none; border-radius: 5px; }
+        .error-message { color: #d9534f; background-color: #f2dede; border: 1px solid #ebccd1; padding: 15px; border-radius: 4px; margin-bottom: 20px; }
     </style>
 </head>
 <body>
 <div class="container">
     <h1>Place a New Order</h1>
+    <c:if test="${not empty errorMessage}">
+        <p class="error-message">${errorMessage}</p>
+    </c:if>
     <form action="/orders/place" method="post">
         <div class="form-group">
             <label for="customerId">Customer:</label>

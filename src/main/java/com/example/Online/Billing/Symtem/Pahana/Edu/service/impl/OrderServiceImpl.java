@@ -11,6 +11,7 @@ import com.example.Online.Billing.Symtem.Pahana.Edu.repository.OrderRepository;
 import com.example.Online.Billing.Symtem.Pahana.Edu.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -29,6 +30,7 @@ public class OrderServiceImpl implements OrderService {
     private ItemRepository itemRepository;
 
     @Override
+    @Transactional // This ensures that if any part fails, the whole transaction is rolled back
     public void placeOrder(OrderDTO orderDTO) {
         Customer customer = customerRepository.findById(orderDTO.getCustomerId())
                 .orElseThrow(() -> new RuntimeException("Customer not found"));
@@ -40,17 +42,27 @@ public class OrderServiceImpl implements OrderService {
         double totalAmount = 0.0;
 
         for (int i = 0; i < orderDTO.getItemIds().size(); i++) {
-            Item item = itemRepository.findById(orderDTO.getItemIds().get(i))
+            Long itemId = orderDTO.getItemIds().get(i);
+            int requestedQuantity = orderDTO.getQuantities().get(i);
+
+            Item item = itemRepository.findById(itemId)
                     .orElseThrow(() -> new RuntimeException("Item not found"));
+
+            if (item.getInStock() < requestedQuantity) {
+                throw new RuntimeException("Not enough stock for item: " + item.getName());
+            }
+
+            item.setInStock(item.getInStock() - requestedQuantity);
+            itemRepository.save(item);
 
             OrderDetail orderDetail = new OrderDetail();
             orderDetail.setOrder(order);
             orderDetail.setItem(item);
-            orderDetail.setQuantity(orderDTO.getQuantities().get(i));
+            orderDetail.setQuantity(requestedQuantity);
             orderDetail.setPrice(item.getPrice());
 
             order.getOrderDetails().add(orderDetail);
-            totalAmount += item.getPrice() * orderDTO.getQuantities().get(i);
+            totalAmount += item.getPrice() * requestedQuantity;
         }
 
         order.setTotalAmount(totalAmount);
