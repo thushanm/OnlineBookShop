@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,6 +22,7 @@
         .submit-btn { background-color: #28a745; color: white; width: 100%; padding: 12px; }
         .home-link { display: inline-block; margin-top: 20px; padding: 10px 20px; background-color: #6c757d; color: white; text-decoration: none; border-radius: 5px; }
         .error-message { color: #d9534f; background-color: #f2dede; border: 1px solid #ebccd1; padding: 15px; border-radius: 4px; margin-bottom: 20px; }
+        .info-message { color: #31708f; background-color: #d9edf7; border: 1px solid #bce8f1; padding: 15px; border-radius: 4px; margin-bottom: 20px; }
     </style>
 </head>
 <body>
@@ -29,29 +31,51 @@
     <c:if test="${not empty errorMessage}">
         <p class="error-message">${errorMessage}</p>
     </c:if>
-    <form action="/orders/place" method="post">
-        <div class="form-group">
-            <label for="customerId">Customer:</label>
-            <select id="customerId" name="customerId">
-                <c:forEach var="customer" items="${customers}">
-                    <option value="${customer.id}">${customer.name}</option>
-                </c:forEach>
-            </select>
-        </div>
 
-        <div class="form-group">
-            <label>Items:</label>
-            <div id="item-container">
-            </div>
-            <button type="button" class="add-item-btn" onclick="addItemRow()">Add Item</button>
-        </div>
+    <c:choose>
+        <c:when test="${empty items}">
+            <p class="info-message">There are no items available to place an order. Please add items first.</p>
+        </c:when>
+        <c:otherwise>
+            <form action="/orders/place" method="post">
+                <div class="form-group">
+                    <label for="customerId">Customer:</label>
+                    <select id="customerId" name="customerId">
+                        <c:forEach var="customer" items="${customers}">
+                            <option value="${customer.id}">${customer.name}</option>
+                        </c:forEach>
+                    </select>
+                </div>
 
-        <input type="submit" class="submit-btn" value="Place Order"/>
-    </form>
+                <div class="form-group">
+                    <label>Items:</label>
+                    <div id="item-container">
+                    </div>
+                    <button type="button" class="add-item-btn" onclick="addItemRow()">Add Item</button>
+                </div>
+
+                <input type="submit" class="submit-btn" value="Place Order"/>
+            </form>
+        </c:otherwise>
+    </c:choose>
+
     <a href="/home" class="home-link">Back to Home</a>
 </div>
 
 <script>
+
+    const availableItems = [
+        <c:forEach var="item" items="${items}" varStatus="status">
+        {
+            id: '${item.id}',
+            // The fn:escapeXml function makes the name safe for JavaScript
+            name: '${fn:escapeXml(item.name)}',
+            inStock: '${item.inStock}'
+        }
+        <c:if test="${not status.last}">,</c:if>
+        </c:forEach>
+    ];
+
     function addItemRow() {
         const container = document.getElementById('item-container');
         const newItemRow = document.createElement('div');
@@ -60,12 +84,13 @@
         const itemSelect = document.createElement('select');
         itemSelect.name = 'itemIds';
 
-        <c:forEach var="item" items="${items}">
-        const option = document.createElement('option');
-        option.value = '${item.id}';
-        option.textContent = '${item.name}';
-        itemSelect.appendChild(option);
-        </c:forEach>
+
+        availableItems.forEach(function(item) {
+            const option = document.createElement('option');
+            option.value = item.id;
+            option.textContent = item.name + ' (In Stock: ' + item.inStock + ')';
+            itemSelect.appendChild(option);
+        });
 
         const quantityInput = document.createElement('input');
         quantityInput.type = 'number';
@@ -78,7 +103,12 @@
         container.appendChild(newItemRow);
     }
 
-    window.onload = addItemRow;
+
+    window.onload = function() {
+        if (availableItems.length > 0) {
+            addItemRow();
+        }
+    };
 </script>
 </body>
 </html>

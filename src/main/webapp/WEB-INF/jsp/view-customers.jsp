@@ -14,11 +14,15 @@
         .customer-table th, .customer-table td { border: 1px solid #ddd; padding: 12px; text-align: left; }
         .action-links a { margin-right: 10px; }
         .home-link { display: inline-block; margin-top: 20px; padding: 10px 20px; background-color: #6c757d; color: white; text-decoration: none; border-radius: 5px; }
+        .error-message { color: #d9534f; background-color: #f2dede; border: 1px solid #ebccd1; padding: 15px; border-radius: 4px; margin-bottom: 20px; }
     </style>
 </head>
 <body>
 <div class="container">
     <h1>Customer Management</h1>
+    <c:if test="${not empty errorMessage}">
+        <p class="error-message">${errorMessage}</p>
+    </c:if>
     <a href="/customers/add" class="add-button">Add New Customer</a>
     <table class="customer-table">
         <thead>

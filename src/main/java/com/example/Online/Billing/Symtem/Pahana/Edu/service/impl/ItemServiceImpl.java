@@ -3,6 +3,7 @@ package com.example.Online.Billing.Symtem.Pahana.Edu.service.impl;
 import com.example.Online.Billing.Symtem.Pahana.Edu.dto.ItemDTO;
 import com.example.Online.Billing.Symtem.Pahana.Edu.entity.Item;
 import com.example.Online.Billing.Symtem.Pahana.Edu.repository.ItemRepository;
+import com.example.Online.Billing.Symtem.Pahana.Edu.repository.OrderDetailRepository;
 import com.example.Online.Billing.Symtem.Pahana.Edu.service.ItemService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,8 @@ public class ItemServiceImpl implements ItemService {
 
     @Autowired
     private ItemRepository itemRepository;
+    @Autowired
+    private OrderDetailRepository orderDetailRepository;
 
     @Override
     public List<ItemDTO> getAllItems() {
@@ -44,6 +47,9 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public void deleteItemById(Long id) {
+        if (!orderDetailRepository.findByItemId(id).isEmpty()) {
+            throw new RuntimeException("Cannot delete this item because it is part of an existing order.");
+        }
         itemRepository.deleteById(id);
     }
 }

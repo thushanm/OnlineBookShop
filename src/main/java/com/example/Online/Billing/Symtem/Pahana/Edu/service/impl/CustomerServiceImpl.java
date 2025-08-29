@@ -2,7 +2,9 @@ package com.example.Online.Billing.Symtem.Pahana.Edu.service.impl;
 
 import com.example.Online.Billing.Symtem.Pahana.Edu.dto.CustomerDTO;
 import com.example.Online.Billing.Symtem.Pahana.Edu.entity.Customer;
+import com.example.Online.Billing.Symtem.Pahana.Edu.repository.BillRepository;
 import com.example.Online.Billing.Symtem.Pahana.Edu.repository.CustomerRepository;
+import com.example.Online.Billing.Symtem.Pahana.Edu.repository.OrderRepository;
 import com.example.Online.Billing.Symtem.Pahana.Edu.service.CustomerService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,12 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Autowired
     private CustomerRepository customerRepository;
+
+    @Autowired
+    private BillRepository billRepository;
+
+    @Autowired
+    private OrderRepository orderRepository;
 
     @Override
     public List<CustomerDTO> getAllCustomers() {
@@ -44,6 +52,9 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public void deleteCustomerById(Long id) {
+        if (!billRepository.findByCustomerId(id).isEmpty() || !orderRepository.findByCustomerId(id).isEmpty()) {
+            throw new RuntimeException("Cannot delete this customer because they have existing bills or orders.");
+        }
         customerRepository.deleteById(id);
     }
 }
