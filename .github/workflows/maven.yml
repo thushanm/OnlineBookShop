@@ -54,11 +54,4 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      # Step 4: Build the frontend image and push it to Docker Hub.
-      - name: Build and push frontend image
-        uses: docker/build-push-action@v5
-        with:
-          context: ./FrontEnds/frontend # Tells Docker to look for the Dockerfile in the 'FrontEnds/frontend' directory.
-          push: true
-          # The image will be named 'thushanm/task-manager-frontend' with a 'latest' tag.
-          tags: thushanm/task-manager-frontend:latest
+
