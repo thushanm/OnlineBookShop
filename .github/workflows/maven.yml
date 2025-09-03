@@ -10,11 +10,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    # This permissions block is necessary to allow the dependency submission action to write to the repository.
-    permissions:
-      contents: read
-      dependency-graph: write
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -29,7 +24,3 @@ jobs:
       - name: Build with Maven
         run: mvn clean install
 
-      # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive.
-      - name: Update dependency graph
-        # Using a stable version tag is recommended over a specific commit hash.
-        uses: advanced-security/maven-dependency-submission-action@v4
