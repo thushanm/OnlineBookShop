@@ -45,7 +45,7 @@
                             <option value="${customer.id}">${customer.name}</option>
                         </c:forEach>
                 </div>
-/
+
                 <div class="form-group">
                     <label>Items:</label>
                     <div id="item-container">
