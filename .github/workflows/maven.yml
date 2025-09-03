@@ -36,5 +36,5 @@ jobs:
           multiPlatform: true
           platform: linux/amd64,linux/arm64
           overrideDriver: true
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+          username: ${{ secrets.DOCKER_USERNAME}}
+          password: ${{ secrets.DOCKER_PASSWORD}}
