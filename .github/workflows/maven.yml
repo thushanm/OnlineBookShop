@@ -30,7 +30,7 @@ jobs:
       - name: Build and push API image
         uses: docker/build-push-action@v5
         with:
-          context: ./api # Tells Docker to look for the Dockerfile in the 'api' directory.
+          context: ./src # Tells Docker to look for the Dockerfile in the 'api' directory.
           push: true
           # The image will be named 'thushanm/task-manager-api' with a 'latest' tag.
           tags: thushanm/task-manager-api:latest
