@@ -30,10 +30,9 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
-          # The build context is '.', the root of the repository, so it can see pom.xml and src/.
           context: .
-          # --- FIX: Explicitly point to the Dockerfile inside the 'src' directory ---
+
           file: ./src/Dockerfile
           push: true
-          # The image will be tagged as 'thushanm/online-book-shop:latest'.
+
           tags: thushanm/online-book-shop:latest
